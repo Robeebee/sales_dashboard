@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         body { background: #f8f9fa; }
         .dashboard-header { 
@@ -13,59 +14,94 @@
             box-shadow: 0 2px 8px rgba(0,0,0,.1);
             margin-bottom: 2rem;
         }
-        .table-responsive { margin-top: 20px; }
-        .alert-badge { background: #fff3cd; color: #856404; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.85rem; }
+        .filter-group { 
+            margin-right: 1rem;
+            max-width: 300px;
+        }
+        .fixed-header {
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0,0,0,.1);
+        }
+        .sort-header {
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .sort-header:hover { background: #f8f9fa; }
+        .alert-badge {
+            background: #fff3cd;
+            color: #856404;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
         .table-hover tbody tr:hover { background-color: rgba(0,123,255,.05)!important; }
+        .export-btn { min-width: 120px; }
+        .dataTables_wrapper { padding: 15px 0; }
     </style>
 </head>
 <body>
     <div class="container-fluid py-4">
+        <!-- 控制面板 -->
         <div class="dashboard-header">
             <div class="row g-3 align-items-center">
                 <div class="col-md-4">
-                    <input type="text" id="unitFilter" class="form-control" placeholder="搜索购货单位..." aria-label="购货单位">
+                    <input type="text" id="unitFilter" class="form-control filter-group" 
+                           placeholder="搜索购货单位..." aria-label="购货单位">
                 </div>
                 <div class="col-md-4">
-                    <input type="text" id="salesFilter" class="form-control" placeholder="搜索业务员..." aria-label="业务员">
+                    <input type="text" id="salesFilter" class="form-control filter-group" 
+                           placeholder="搜索业务员..." aria-label="业务员">
                 </div>
                 <div class="col-md-4 text-end">
-                    <button class="btn btn-success" onclick="exportData()">
-                        导出数据
+                    <button class="btn btn-success export-btn" onclick="exportData()">
+                        <i class="fas fa-download me-2"></i>导出数据
                     </button>
                 </div>
             </div>
         </div>
 
+        <!-- 数据表格 -->
         <div class="table-responsive rounded-3 shadow-sm">
             <table class="table table-hover table-striped align-middle mb-0">
-                <thead>
-                    <tr>
+                <thead class="fixed-header">
+                    <tr class="align-middle">
                         <th class="sort-header" data-column="购货单位">购货单位</th>
                         <th class="sort-header" data-column="业务员">业务员</th>
                         
                         <th class="sort-header" data-column="本周销量">
                             本周销量
+                            <span class="sort-indicator"></span>
                         </th>
                         <th class="sort-header" data-column="本月销量">
                             本月销量
+                            <span class="sort-indicator"></span>
                         </th>
                         <th class="sort-header" data-column="本季销量">
                             本季销量
+                            <span class="sort-indicator"></span>
                         </th>
                         <th class="sort-header" data-column="2021销量">
                             2021销量
+                            <span class="sort-indicator"></span>
                         </th>
                         <th class="sort-header" data-column="2022销量">
                             2022销量
+                            <span class="sort-indicator"></span>
                         </th>
                         <th class="sort-header" data-column="2023销量">
                             2023销量
+                            <span class="sort-indicator"></span>
                         </th>
                         <th class="sort-header" data-column="2024销量">
                             2024销量
+                            <span class="sort-indicator"></span>
                         </th>
                         <th class="sort-header" data-column="2025销量">
                             2025销量
+                            <span class="sort-indicator"></span>
                         </th>
                         <th>趋势预警</th>
                     </tr>
@@ -1518,7 +1554,7 @@
                     <tr>
                         <td>东辰纺织</td>
                         <td>许书沛</td>
-                        <td data-column="本周销量" data-value="0.09">0.09</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="0.09">0.09</td>
                         <td data-column="本季销量" data-value="0.09">0.09</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
@@ -1557,7 +1593,7 @@
                     <tr>
                         <td>两英王新华</td>
                         <td>陈少豪</td>
-                        <td data-column="本周销量" data-value="8.6">8.60</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="8.6">8.60</td>
                         <td data-column="本季销量" data-value="8.6">8.60</td>
                         <td data-column="2021销量" data-value="3.04">3.04</td>
@@ -1596,7 +1632,7 @@
                     <tr>
                         <td>中宇纺织</td>
                         <td>罗小经</td>
-                        <td data-column="本周销量" data-value="2.1">2.10</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="24.35">24.35</td>
                         <td data-column="本季销量" data-value="24.35">24.35</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
@@ -1661,7 +1697,7 @@
                     <tr>
                         <td>中恒供应链</td>
                         <td>洪文革</td>
-                        <td data-column="本周销量" data-value="9.07">9.07</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="9.07">9.07</td>
                         <td data-column="本季销量" data-value="9.07">9.07</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
@@ -1739,14 +1775,14 @@
                     <tr>
                         <td>丰瑞纺织</td>
                         <td>洪乾坤</td>
-                        <td data-column="本周销量" data-value="0.0">0.00</td>
-                        <td data-column="本月销量" data-value="0.0">0.00</td>
-                        <td data-column="本季销量" data-value="0.0">0.00</td>
+                        <td data-column="本周销量" data-value="8.2">8.20</td>
+                        <td data-column="本月销量" data-value="8.2">8.20</td>
+                        <td data-column="本季销量" data-value="8.2">8.20</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
                         <td data-column="2022销量" data-value="0.0">0.00</td>
                         <td data-column="2023销量" data-value="0.0">0.00</td>
                         <td data-column="2024销量" data-value="44.41">44.41</td>
-                        <td data-column="2025销量" data-value="101.14">101.14</td>
+                        <td data-column="2025销量" data-value="109.34">109.34</td>
                         <td>正常</td>
                     </tr>
                     <tr>
@@ -1909,14 +1945,14 @@
                         <td>众鑫和</td>
                         <td>张赐锋</td>
                         <td data-column="本周销量" data-value="0.0">0.00</td>
-                        <td data-column="本月销量" data-value="8.75">8.75</td>
-                        <td data-column="本季销量" data-value="8.75">8.75</td>
+                        <td data-column="本月销量" data-value="16.0">16.00</td>
+                        <td data-column="本季销量" data-value="16.0">16.00</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
                         <td data-column="2022销量" data-value="0.0">0.00</td>
                         <td data-column="2023销量" data-value="0.0">0.00</td>
                         <td data-column="2024销量" data-value="452.53">452.53</td>
-                        <td data-column="2025销量" data-value="72.59">72.59</td>
-                        <td><span class="alert-badge">2025↓84.0%</span></td>
+                        <td data-column="2025销量" data-value="79.84">79.84</td>
+                        <td><span class="alert-badge">2025↓82.4%</span></td>
                     </tr>
                     <tr>
                         <td>伟业纺织</td>
@@ -2194,14 +2230,14 @@
                     <tr>
                         <td>佛山市宝诺纺织有限公司</td>
                         <td>刘泉滨</td>
-                        <td data-column="本周销量" data-value="10.0">10.00</td>
-                        <td data-column="本月销量" data-value="54.75">54.75</td>
-                        <td data-column="本季销量" data-value="54.75">54.75</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
+                        <td data-column="本月销量" data-value="59.45">59.45</td>
+                        <td data-column="本季销量" data-value="59.45">59.45</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
                         <td data-column="2022销量" data-value="0.0">0.00</td>
                         <td data-column="2023销量" data-value="0.0">0.00</td>
                         <td data-column="2024销量" data-value="0.0">0.00</td>
-                        <td data-column="2025销量" data-value="121.5">121.50</td>
+                        <td data-column="2025销量" data-value="126.2">126.20</td>
                         <td>正常</td>
                     </tr>
                     <tr>
@@ -2389,7 +2425,7 @@
                     <tr>
                         <td>佛山市豪乐纺织有限公司</td>
                         <td>吴建炜</td>
-                        <td data-column="本周销量" data-value="5.0">5.00</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="20.0">20.00</td>
                         <td data-column="本季销量" data-value="20.0">20.00</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
@@ -2454,7 +2490,7 @@
                     <tr>
                         <td>佛山汇凯鑫纺织有限公司</td>
                         <td>洪乾坤</td>
-                        <td data-column="本周销量" data-value="15.0">15.00</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="15.0">15.00</td>
                         <td data-column="本季销量" data-value="15.0">15.00</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
@@ -2779,7 +2815,7 @@
                     <tr>
                         <td>全胜纺织</td>
                         <td>张赐锋</td>
-                        <td data-column="本周销量" data-value="4.99">4.99</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="4.99">4.99</td>
                         <td data-column="本季销量" data-value="4.99">4.99</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
@@ -2805,7 +2841,7 @@
                     <tr>
                         <td>典盛纺织</td>
                         <td>洪乾坤</td>
-                        <td data-column="本周销量" data-value="33.0">33.00</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="67.0">67.00</td>
                         <td data-column="本季销量" data-value="67.0">67.00</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
@@ -2910,14 +2946,14 @@
                         <td>刘树腾</td>
                         <td>刘俊杰</td>
                         <td data-column="本周销量" data-value="0.0">0.00</td>
-                        <td data-column="本月销量" data-value="9.0">9.00</td>
-                        <td data-column="本季销量" data-value="9.0">9.00</td>
+                        <td data-column="本月销量" data-value="12.0">12.00</td>
+                        <td data-column="本季销量" data-value="12.0">12.00</td>
                         <td data-column="2021销量" data-value="398.3">398.30</td>
                         <td data-column="2022销量" data-value="427.53">427.53</td>
                         <td data-column="2023销量" data-value="1753.43">1753.43</td>
                         <td data-column="2024销量" data-value="1638.58">1638.58</td>
-                        <td data-column="2025销量" data-value="183.52">183.52</td>
-                        <td><span class="alert-badge">2025↓88.8%</span></td>
+                        <td data-column="2025销量" data-value="186.52">186.52</td>
+                        <td><span class="alert-badge">2025↓88.6%</span></td>
                     </tr>
                     <tr>
                         <td>刘金胜</td>
@@ -2948,7 +2984,7 @@
                     <tr>
                         <td>创丰纺织</td>
                         <td>洪乾坤</td>
-                        <td data-column="本周销量" data-value="5.0">5.00</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="12.25">12.25</td>
                         <td data-column="本季销量" data-value="12.25">12.25</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
@@ -3001,14 +3037,14 @@
                         <td>加隆纺织</td>
                         <td>罗小经</td>
                         <td data-column="本周销量" data-value="0.0">0.00</td>
-                        <td data-column="本月销量" data-value="45.18">45.18</td>
-                        <td data-column="本季销量" data-value="45.18">45.18</td>
+                        <td data-column="本月销量" data-value="67.68">67.68</td>
+                        <td data-column="本季销量" data-value="67.68">67.68</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
                         <td data-column="2022销量" data-value="0.0">0.00</td>
                         <td data-column="2023销量" data-value="0.0">0.00</td>
                         <td data-column="2024销量" data-value="558.67">558.67</td>
-                        <td data-column="2025销量" data-value="112.18">112.18</td>
-                        <td><span class="alert-badge">2025↓79.9%</span></td>
+                        <td data-column="2025销量" data-value="134.68">134.68</td>
+                        <td><span class="alert-badge">2025↓75.9%</span></td>
                     </tr>
                     <tr>
                         <td>华达（福建）布业有限公司</td>
@@ -3078,7 +3114,7 @@
                     <tr>
                         <td>卓群纺织</td>
                         <td>施金龙</td>
-                        <td data-column="本周销量" data-value="1.02">1.02</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="2.05">2.05</td>
                         <td data-column="本季销量" data-value="2.05">2.05</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
@@ -3091,7 +3127,7 @@
                     <tr>
                         <td>卓群纺织</td>
                         <td>洪乾坤</td>
-                        <td data-column="本周销量" data-value="12.42">12.42</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="12.42">12.42</td>
                         <td data-column="本季销量" data-value="12.42">12.42</td>
                         <td data-column="2021销量" data-value="156.63">156.63</td>
@@ -3143,7 +3179,7 @@
                     <tr>
                         <td>南艺纺织</td>
                         <td>洪乾坤</td>
-                        <td data-column="本周销量" data-value="30.0">30.00</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="219.0">219.00</td>
                         <td data-column="本季销量" data-value="219.0">219.00</td>
                         <td data-column="2021销量" data-value="186.33">186.33</td>
@@ -3325,7 +3361,7 @@
                     <tr>
                         <td>南通知纱纺织有限公司</td>
                         <td>刘俊杰</td>
-                        <td data-column="本周销量" data-value="1.04">1.04</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="1.04">1.04</td>
                         <td data-column="本季销量" data-value="1.04">1.04</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
@@ -3456,14 +3492,14 @@
                         <td>厦门双禾纺织品有限公司</td>
                         <td>陈晓明</td>
                         <td data-column="本周销量" data-value="0.0">0.00</td>
-                        <td data-column="本月销量" data-value="0.0">0.00</td>
-                        <td data-column="本季销量" data-value="0.0">0.00</td>
+                        <td data-column="本月销量" data-value="1.91">1.91</td>
+                        <td data-column="本季销量" data-value="1.91">1.91</td>
                         <td data-column="2021销量" data-value="9.32">9.32</td>
                         <td data-column="2022销量" data-value="29.82">29.82</td>
                         <td data-column="2023销量" data-value="42.1">42.10</td>
                         <td data-column="2024销量" data-value="18.95">18.95</td>
-                        <td data-column="2025销量" data-value="7.38">7.38</td>
-                        <td><span class="alert-badge">2024↓55.0% | 2025↓61.1%</span></td>
+                        <td data-column="2025销量" data-value="9.29">9.29</td>
+                        <td><span class="alert-badge">2024↓55.0% | 2025↓51.0%</span></td>
                     </tr>
                     <tr>
                         <td>厦门唯诗纺织品有限公司</td>
@@ -3611,7 +3647,7 @@
                     <tr>
                         <td>厦门浩纬实业有限公司/夏纺</td>
                         <td>练添旺</td>
-                        <td data-column="本周销量" data-value="3.0">3.00</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="3.0">3.00</td>
                         <td data-column="本季销量" data-value="3.0">3.00</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
@@ -3989,14 +4025,14 @@
                         <td>同辉纺织</td>
                         <td>洪乾坤</td>
                         <td data-column="本周销量" data-value="0.0">0.00</td>
-                        <td data-column="本月销量" data-value="0.0">0.00</td>
-                        <td data-column="本季销量" data-value="0.0">0.00</td>
+                        <td data-column="本月销量" data-value="35.0">35.00</td>
+                        <td data-column="本季销量" data-value="35.0">35.00</td>
                         <td data-column="2021销量" data-value="132.72">132.72</td>
                         <td data-column="2022销量" data-value="20.57">20.57</td>
                         <td data-column="2023销量" data-value="0.0">0.00</td>
                         <td data-column="2024销量" data-value="1.22">1.22</td>
-                        <td data-column="2025销量" data-value="0.0">0.00</td>
-                        <td><span class="alert-badge">2022↓84.5% | 2023↓100.0% | 2025↓100.0%</span></td>
+                        <td data-column="2025销量" data-value="35.0">35.00</td>
+                        <td><span class="alert-badge">2022↓84.5% | 2023↓100.0%</span></td>
                     </tr>
                     <tr>
                         <td>同达兴纺织</td>
@@ -4183,7 +4219,7 @@
                     <tr>
                         <td>咏泰豐布業</td>
                         <td>吴建炜</td>
-                        <td data-column="本周销量" data-value="8.0">8.00</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="8.0">8.00</td>
                         <td data-column="本季销量" data-value="8.0">8.00</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
@@ -4288,14 +4324,14 @@
                         <td>四海纺织</td>
                         <td>洪乾坤</td>
                         <td data-column="本周销量" data-value="0.0">0.00</td>
-                        <td data-column="本月销量" data-value="4.0">4.00</td>
-                        <td data-column="本季销量" data-value="4.0">4.00</td>
+                        <td data-column="本月销量" data-value="5.08">5.08</td>
+                        <td data-column="本季销量" data-value="5.08">5.08</td>
                         <td data-column="2021销量" data-value="235.65">235.65</td>
                         <td data-column="2022销量" data-value="42.28">42.28</td>
                         <td data-column="2023销量" data-value="4.74">4.74</td>
                         <td data-column="2024销量" data-value="251.29">251.29</td>
-                        <td data-column="2025销量" data-value="6.15">6.15</td>
-                        <td><span class="alert-badge">2022↓82.1% | 2023↓88.8% | 2025↓97.6%</span></td>
+                        <td data-column="2025销量" data-value="7.22">7.22</td>
+                        <td><span class="alert-badge">2022↓82.1% | 2023↓88.8% | 2025↓97.1%</span></td>
                     </tr>
                     <tr>
                         <td>圣裕织造厂</td>
@@ -4392,14 +4428,14 @@
                         <td>大宏纺织（代采华孚）</td>
                         <td>刘泉滨</td>
                         <td data-column="本周销量" data-value="0.0">0.00</td>
-                        <td data-column="本月销量" data-value="33.0">33.00</td>
-                        <td data-column="本季销量" data-value="33.0">33.00</td>
+                        <td data-column="本月销量" data-value="187.1">187.10</td>
+                        <td data-column="本季销量" data-value="187.1">187.10</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
                         <td data-column="2022销量" data-value="0.0">0.00</td>
                         <td data-column="2023销量" data-value="0.0">0.00</td>
                         <td data-column="2024销量" data-value="3428.09">3428.09</td>
-                        <td data-column="2025销量" data-value="2759.13">2759.13</td>
-                        <td><span class="alert-badge">2025↓19.5%</span></td>
+                        <td data-column="2025销量" data-value="2913.23">2913.23</td>
+                        <td><span class="alert-badge">2025↓15.0%</span></td>
                     </tr>
                     <tr>
                         <td>大宏纺织（代采数智世界）</td>
@@ -4938,13 +4974,13 @@
                         <td>宝乐赞</td>
                         <td>张赐锋</td>
                         <td data-column="本周销量" data-value="0.0">0.00</td>
-                        <td data-column="本月销量" data-value="0.0">0.00</td>
-                        <td data-column="本季销量" data-value="0.0">0.00</td>
+                        <td data-column="本月销量" data-value="31.98">31.98</td>
+                        <td data-column="本季销量" data-value="31.98">31.98</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
                         <td data-column="2022销量" data-value="0.0">0.00</td>
                         <td data-column="2023销量" data-value="0.0">0.00</td>
                         <td data-column="2024销量" data-value="0.0">0.00</td>
-                        <td data-column="2025销量" data-value="12.02">12.02</td>
+                        <td data-column="2025销量" data-value="44.0">44.00</td>
                         <td>正常</td>
                     </tr>
                     <tr>
@@ -5223,15 +5259,15 @@
                     <tr>
                         <td>广东博添纺织有限公司</td>
                         <td>洪乾坤</td>
-                        <td data-column="本周销量" data-value="3.12">3.12</td>
-                        <td data-column="本月销量" data-value="3.12">3.12</td>
-                        <td data-column="本季销量" data-value="3.12">3.12</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
+                        <td data-column="本月销量" data-value="8.12">8.12</td>
+                        <td data-column="本季销量" data-value="8.12">8.12</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
                         <td data-column="2022销量" data-value="41.53">41.53</td>
                         <td data-column="2023销量" data-value="459.86">459.86</td>
                         <td data-column="2024销量" data-value="77.97">77.97</td>
-                        <td data-column="2025销量" data-value="21.72">21.72</td>
-                        <td><span class="alert-badge">2024↓83.0% | 2025↓72.1%</span></td>
+                        <td data-column="2025销量" data-value="26.72">26.72</td>
+                        <td><span class="alert-badge">2024↓83.0% | 2025↓65.7%</span></td>
                     </tr>
                     <tr>
                         <td>广东展业布行有限公司</td>
@@ -5249,7 +5285,7 @@
                     <tr>
                         <td>广东布汇纺织有限公司(鸿粤牛仔）</td>
                         <td>罗小经</td>
-                        <td data-column="本周销量" data-value="65.8">65.80</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="65.8">65.80</td>
                         <td data-column="本季销量" data-value="65.8">65.80</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
@@ -5314,15 +5350,15 @@
                     <tr>
                         <td>广东程羽纺织有限公司</td>
                         <td>洪乾坤</td>
-                        <td data-column="本周销量" data-value="21.0">21.00</td>
-                        <td data-column="本月销量" data-value="37.0">37.00</td>
-                        <td data-column="本季销量" data-value="37.0">37.00</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
+                        <td data-column="本月销量" data-value="47.0">47.00</td>
+                        <td data-column="本季销量" data-value="47.0">47.00</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
                         <td data-column="2022销量" data-value="0.0">0.00</td>
                         <td data-column="2023销量" data-value="0.0">0.00</td>
                         <td data-column="2024销量" data-value="333.24">333.24</td>
-                        <td data-column="2025销量" data-value="144.5">144.50</td>
-                        <td><span class="alert-badge">2025↓56.6%</span></td>
+                        <td data-column="2025销量" data-value="154.5">154.50</td>
+                        <td><span class="alert-badge">2025↓53.6%</span></td>
                     </tr>
                     <tr>
                         <td>广东精纶纺织科技有限公司</td>
@@ -5392,15 +5428,15 @@
                     <tr>
                         <td>广利布行</td>
                         <td>张赐锋</td>
-                        <td data-column="本周销量" data-value="4.99">4.99</td>
-                        <td data-column="本月销量" data-value="14.97">14.97</td>
-                        <td data-column="本季销量" data-value="14.97">14.97</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
+                        <td data-column="本月销量" data-value="19.96">19.96</td>
+                        <td data-column="本季销量" data-value="19.96">19.96</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
                         <td data-column="2022销量" data-value="0.0">0.00</td>
                         <td data-column="2023销量" data-value="0.0">0.00</td>
                         <td data-column="2024销量" data-value="56.15">56.15</td>
-                        <td data-column="2025销量" data-value="38.31">38.31</td>
-                        <td><span class="alert-badge">2025↓31.8%</span></td>
+                        <td data-column="2025销量" data-value="43.3">43.30</td>
+                        <td><span class="alert-badge">2025↓22.9%</span></td>
                     </tr>
                     <tr>
                         <td>广利布行</td>
@@ -5639,15 +5675,15 @@
                     <tr>
                         <td>庄楚鹏</td>
                         <td>陈少豪</td>
-                        <td data-column="本周销量" data-value="5.0">5.00</td>
-                        <td data-column="本月销量" data-value="10.75">10.75</td>
-                        <td data-column="本季销量" data-value="10.75">10.75</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
+                        <td data-column="本月销量" data-value="15.75">15.75</td>
+                        <td data-column="本季销量" data-value="15.75">15.75</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
                         <td data-column="2022销量" data-value="0.0">0.00</td>
                         <td data-column="2023销量" data-value="0.0">0.00</td>
                         <td data-column="2024销量" data-value="61.58">61.58</td>
-                        <td data-column="2025销量" data-value="10.78">10.78</td>
-                        <td><span class="alert-badge">2025↓82.5%</span></td>
+                        <td data-column="2025销量" data-value="15.78">15.78</td>
+                        <td><span class="alert-badge">2025↓74.4%</span></td>
                     </tr>
                     <tr>
                         <td>庄育雄</td>
@@ -5691,7 +5727,7 @@
                     <tr>
                         <td>康雅纺织</td>
                         <td>洪文革</td>
-                        <td data-column="本周销量" data-value="1.0">1.00</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="3.05">3.05</td>
                         <td data-column="本季销量" data-value="3.05">3.05</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
@@ -5821,14 +5857,14 @@
                     <tr>
                         <td>张少海</td>
                         <td>洪乾坤</td>
-                        <td data-column="本周销量" data-value="30.73">30.73</td>
-                        <td data-column="本月销量" data-value="68.74">68.74</td>
-                        <td data-column="本季销量" data-value="68.74">68.74</td>
+                        <td data-column="本周销量" data-value="0.05">0.05</td>
+                        <td data-column="本月销量" data-value="81.78">81.78</td>
+                        <td data-column="本季销量" data-value="81.78">81.78</td>
                         <td data-column="2021销量" data-value="976.39">976.39</td>
                         <td data-column="2022销量" data-value="335.57">335.57</td>
                         <td data-column="2023销量" data-value="279.48">279.48</td>
                         <td data-column="2024销量" data-value="604.29">604.29</td>
-                        <td data-column="2025销量" data-value="669.01">669.01</td>
+                        <td data-column="2025销量" data-value="682.06">682.06</td>
                         <td><span class="alert-badge">2022↓65.6% | 2023↓16.7%</span></td>
                     </tr>
                     <tr>
@@ -5925,7 +5961,7 @@
                     <tr>
                         <td>强兴一纺织</td>
                         <td>张赐锋</td>
-                        <td data-column="本周销量" data-value="1.0">1.00</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="1.0">1.00</td>
                         <td data-column="本季销量" data-value="1.0">1.00</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
@@ -6263,7 +6299,7 @@
                     <tr>
                         <td>新东诚纺织</td>
                         <td>张赐锋</td>
-                        <td data-column="本周销量" data-value="33.0">33.00</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="33.0">33.00</td>
                         <td data-column="本季销量" data-value="33.0">33.00</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
@@ -6289,15 +6325,15 @@
                     <tr>
                         <td>新嘉纺织有限公司</td>
                         <td>洪乾坤</td>
-                        <td data-column="本周销量" data-value="0.0">0.00</td>
-                        <td data-column="本月销量" data-value="0.0">0.00</td>
-                        <td data-column="本季销量" data-value="0.0">0.00</td>
+                        <td data-column="本周销量" data-value="6.0">6.00</td>
+                        <td data-column="本月销量" data-value="6.0">6.00</td>
+                        <td data-column="本季销量" data-value="6.0">6.00</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
                         <td data-column="2022销量" data-value="20.98">20.98</td>
                         <td data-column="2023销量" data-value="0.0">0.00</td>
                         <td data-column="2024销量" data-value="338.83">338.83</td>
-                        <td data-column="2025销量" data-value="1.0">1.00</td>
-                        <td><span class="alert-badge">2023↓100.0% | 2025↓99.7%</span></td>
+                        <td data-column="2025销量" data-value="7.0">7.00</td>
+                        <td><span class="alert-badge">2023↓100.0% | 2025↓97.9%</span></td>
                     </tr>
                     <tr>
                         <td>新意</td>
@@ -6328,7 +6364,7 @@
                     <tr>
                         <td>新正</td>
                         <td>陈少豪</td>
-                        <td data-column="本周销量" data-value="0.6">0.60</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="10.3">10.30</td>
                         <td data-column="本季销量" data-value="10.3">10.30</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
@@ -6562,7 +6598,7 @@
                     <tr>
                         <td>旺佳布业</td>
                         <td>张赐锋</td>
-                        <td data-column="本周销量" data-value="1.09">1.09</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="1.29">1.29</td>
                         <td data-column="本季销量" data-value="1.29">1.29</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
@@ -6679,7 +6715,7 @@
                     <tr>
                         <td>明轩纺织</td>
                         <td>洪乾坤</td>
-                        <td data-column="本周销量" data-value="5.0">5.00</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="5.0">5.00</td>
                         <td data-column="本季销量" data-value="5.0">5.00</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
@@ -6705,7 +6741,7 @@
                     <tr>
                         <td>星业布行</td>
                         <td>吴建炜</td>
-                        <td data-column="本周销量" data-value="3.0">3.00</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="3.0">3.00</td>
                         <td data-column="本季销量" data-value="3.0">3.00</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
@@ -7160,7 +7196,7 @@
                     <tr>
                         <td>晋江市百世情服装织造有限公司</td>
                         <td>陈晓明</td>
-                        <td data-column="本周销量" data-value="2.5">2.50</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="3.09">3.09</td>
                         <td data-column="本季销量" data-value="3.09">3.09</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
@@ -7186,7 +7222,7 @@
                     <tr>
                         <td>晋江市福凯服装织造有限公司</td>
                         <td>陈晓明</td>
-                        <td data-column="本周销量" data-value="0.5">0.50</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="0.5">0.50</td>
                         <td data-column="本季销量" data-value="0.5">0.50</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
@@ -7265,14 +7301,14 @@
                         <td>晋江市豪美服装织造有限公司</td>
                         <td>陈晓明</td>
                         <td data-column="本周销量" data-value="0.0">0.00</td>
-                        <td data-column="本月销量" data-value="5.01">5.01</td>
-                        <td data-column="本季销量" data-value="5.01">5.01</td>
+                        <td data-column="本月销量" data-value="10.02">10.02</td>
+                        <td data-column="本季销量" data-value="10.02">10.02</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
                         <td data-column="2022销量" data-value="9.14">9.14</td>
                         <td data-column="2023销量" data-value="150.7">150.70</td>
                         <td data-column="2024销量" data-value="20.1">20.10</td>
-                        <td data-column="2025销量" data-value="5.01">5.01</td>
-                        <td><span class="alert-badge">2024↓86.7% | 2025↓75.1%</span></td>
+                        <td data-column="2025销量" data-value="10.02">10.02</td>
+                        <td><span class="alert-badge">2024↓86.7% | 2025↓50.1%</span></td>
                     </tr>
                     <tr>
                         <td>晋江市豪颖兄弟服饰有限公司</td>
@@ -7992,7 +8028,7 @@
                     <tr>
                         <td>李延涛</td>
                         <td>刘俊杰</td>
-                        <td data-column="本周销量" data-value="8.0">8.00</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="8.0">8.00</td>
                         <td data-column="本季销量" data-value="8.0">8.00</td>
                         <td data-column="2021销量" data-value="83.46">83.46</td>
@@ -8187,14 +8223,14 @@
                     <tr>
                         <td>杨永鹏</td>
                         <td>陈少豪</td>
-                        <td data-column="本周销量" data-value="0.0">0.00</td>
-                        <td data-column="本月销量" data-value="131.14">131.14</td>
-                        <td data-column="本季销量" data-value="131.14">131.14</td>
+                        <td data-column="本周销量" data-value="1.0">1.00</td>
+                        <td data-column="本月销量" data-value="136.64">136.64</td>
+                        <td data-column="本季销量" data-value="136.64">136.64</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
                         <td data-column="2022销量" data-value="0.0">0.00</td>
                         <td data-column="2023销量" data-value="0.0">0.00</td>
                         <td data-column="2024销量" data-value="840.37">840.37</td>
-                        <td data-column="2025销量" data-value="1733.17">1733.17</td>
+                        <td data-column="2025销量" data-value="1738.67">1738.67</td>
                         <td>正常</td>
                     </tr>
                     <tr>
@@ -8304,7 +8340,7 @@
                     <tr>
                         <td>杭州恒言纺织有限公司</td>
                         <td>许书沛</td>
-                        <td data-column="本周销量" data-value="30.0">30.00</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="75.0">75.00</td>
                         <td data-column="本季销量" data-value="75.0">75.00</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
@@ -8317,7 +8353,7 @@
                     <tr>
                         <td>杭州新茂纺织有限公司</td>
                         <td>许书沛</td>
-                        <td data-column="本周销量" data-value="-1.28">-1.28</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="3.8">3.80</td>
                         <td data-column="本季销量" data-value="3.8">3.80</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
@@ -8369,7 +8405,7 @@
                     <tr>
                         <td>杭州玮瑞科技有限公司</td>
                         <td>许书沛</td>
-                        <td data-column="本周销量" data-value="12.82">12.82</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="25.91">25.91</td>
                         <td data-column="本季销量" data-value="25.91">25.91</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
@@ -8421,7 +8457,7 @@
                     <tr>
                         <td>杭州耀祥针纺有限公司</td>
                         <td>王刚</td>
-                        <td data-column="本周销量" data-value="0.55">0.55</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="0.55">0.55</td>
                         <td data-column="本季销量" data-value="0.55">0.55</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
@@ -8473,7 +8509,7 @@
                     <tr>
                         <td>杭州辰耀纺织品有限公司</td>
                         <td>许书沛</td>
-                        <td data-column="本周销量" data-value="12.85">12.85</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="12.85">12.85</td>
                         <td data-column="本季销量" data-value="12.85">12.85</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
@@ -8564,7 +8600,7 @@
                     <tr>
                         <td>枫天纺织</td>
                         <td>洪乾坤</td>
-                        <td data-column="本周销量" data-value="13.0">13.00</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="14.0">14.00</td>
                         <td data-column="本季销量" data-value="14.0">14.00</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
@@ -8825,14 +8861,14 @@
                         <td>汉辉织厂</td>
                         <td>吴建炜</td>
                         <td data-column="本周销量" data-value="0.0">0.00</td>
-                        <td data-column="本月销量" data-value="0.0">0.00</td>
-                        <td data-column="本季销量" data-value="0.0">0.00</td>
+                        <td data-column="本月销量" data-value="10.0">10.00</td>
+                        <td data-column="本季销量" data-value="10.0">10.00</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
                         <td data-column="2022销量" data-value="0.0">0.00</td>
                         <td data-column="2023销量" data-value="155.78">155.78</td>
                         <td data-column="2024销量" data-value="310.17">310.17</td>
-                        <td data-column="2025销量" data-value="77.8">77.80</td>
-                        <td><span class="alert-badge">2025↓74.9%</span></td>
+                        <td data-column="2025销量" data-value="87.8">87.80</td>
+                        <td><span class="alert-badge">2025↓71.7%</span></td>
                     </tr>
                     <tr>
                         <td>汕头伟兴针织厂</td>
@@ -8993,20 +9029,20 @@
                     <tr>
                         <td>汕头市潮南区金怡丰实业有限公司</td>
                         <td>洪文革</td>
-                        <td data-column="本周销量" data-value="2.65">2.65</td>
-                        <td data-column="本月销量" data-value="30.12">30.12</td>
-                        <td data-column="本季销量" data-value="30.12">30.12</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
+                        <td data-column="本月销量" data-value="37.72">37.72</td>
+                        <td data-column="本季销量" data-value="37.72">37.72</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
                         <td data-column="2022销量" data-value="0.0">0.00</td>
                         <td data-column="2023销量" data-value="0.0">0.00</td>
                         <td data-column="2024销量" data-value="150.51">150.51</td>
-                        <td data-column="2025销量" data-value="162.0">162.00</td>
+                        <td data-column="2025销量" data-value="169.6">169.60</td>
                         <td>正常</td>
                     </tr>
                     <tr>
                         <td>汕头市潮南区金怡丰实业有限公司-洪乾坤</td>
                         <td>洪乾坤</td>
-                        <td data-column="本周销量" data-value="1.5">1.50</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="4.5">4.50</td>
                         <td data-column="本季销量" data-value="4.5">4.50</td>
                         <td data-column="2021销量" data-value="307.89">307.89</td>
@@ -9098,14 +9134,14 @@
                         <td>汕头立华纺织</td>
                         <td>陈少豪</td>
                         <td data-column="本周销量" data-value="0.0">0.00</td>
-                        <td data-column="本月销量" data-value="0.0">0.00</td>
-                        <td data-column="本季销量" data-value="0.0">0.00</td>
+                        <td data-column="本月销量" data-value="1.0">1.00</td>
+                        <td data-column="本季销量" data-value="1.0">1.00</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
                         <td data-column="2022销量" data-value="0.0">0.00</td>
                         <td data-column="2023销量" data-value="0.0">0.00</td>
                         <td data-column="2024销量" data-value="304.48">304.48</td>
-                        <td data-column="2025销量" data-value="1.1">1.10</td>
-                        <td><span class="alert-badge">2025↓99.6%</span></td>
+                        <td data-column="2025销量" data-value="2.1">2.10</td>
+                        <td><span class="alert-badge">2025↓99.3%</span></td>
                     </tr>
                     <tr>
                         <td>汕头郑少彬</td>
@@ -9175,7 +9211,7 @@
                     <tr>
                         <td>江苏南楚纺织品有限公司</td>
                         <td>刘俊杰</td>
-                        <td data-column="本周销量" data-value="0.02">0.02</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="0.02">0.02</td>
                         <td data-column="本季销量" data-value="0.02">0.02</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
@@ -9475,14 +9511,14 @@
                         <td>泉州凯炜纺织有限公司</td>
                         <td>陈晓明</td>
                         <td data-column="本周销量" data-value="0.0">0.00</td>
-                        <td data-column="本月销量" data-value="5.6">5.60</td>
-                        <td data-column="本季销量" data-value="5.6">5.60</td>
+                        <td data-column="本月销量" data-value="6.49">6.49</td>
+                        <td data-column="本季销量" data-value="6.49">6.49</td>
                         <td data-column="2021销量" data-value="2.0">2.00</td>
                         <td data-column="2022销量" data-value="2.04">2.04</td>
                         <td data-column="2023销量" data-value="82.94">82.94</td>
                         <td data-column="2024销量" data-value="289.66">289.66</td>
-                        <td data-column="2025销量" data-value="67.99">67.99</td>
-                        <td><span class="alert-badge">2025↓76.5%</span></td>
+                        <td data-column="2025销量" data-value="68.88">68.88</td>
+                        <td><span class="alert-badge">2025↓76.2%</span></td>
                     </tr>
                     <tr>
                         <td>泉州华博纺织有限公司</td>
@@ -9643,7 +9679,7 @@
                     <tr>
                         <td>泉州市人丰轻纺有限公司</td>
                         <td>练添旺</td>
-                        <td data-column="本周销量" data-value="1.5">1.50</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="6.49">6.49</td>
                         <td data-column="本季销量" data-value="6.49">6.49</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
@@ -9695,15 +9731,15 @@
                     <tr>
                         <td>泉州市左右逢袁纺织品有限公司</td>
                         <td>陈晓明</td>
-                        <td data-column="本周销量" data-value="10.0">10.00</td>
-                        <td data-column="本月销量" data-value="25.0">25.00</td>
-                        <td data-column="本季销量" data-value="25.0">25.00</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
+                        <td data-column="本月销量" data-value="27.0">27.00</td>
+                        <td data-column="本季销量" data-value="27.0">27.00</td>
                         <td data-column="2021销量" data-value="212.97">212.97</td>
                         <td data-column="2022销量" data-value="135.4">135.40</td>
                         <td data-column="2023销量" data-value="383.23">383.23</td>
                         <td data-column="2024销量" data-value="582.03">582.03</td>
-                        <td data-column="2025销量" data-value="94.02">94.02</td>
-                        <td><span class="alert-badge">2022↓36.4% | 2025↓83.8%</span></td>
+                        <td data-column="2025销量" data-value="96.02">96.02</td>
+                        <td><span class="alert-badge">2022↓36.4% | 2025↓83.5%</span></td>
                     </tr>
                     <tr>
                         <td>泉州市弘领服装有限公司</td>
@@ -10046,7 +10082,7 @@
                     <tr>
                         <td>泉州海天材料科技股份有限公司</td>
                         <td>练添旺</td>
-                        <td data-column="本周销量" data-value="5.25">5.25</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="10.25">10.25</td>
                         <td data-column="本季销量" data-value="10.25">10.25</td>
                         <td data-column="2021销量" data-value="134.43">134.43</td>
@@ -10125,14 +10161,14 @@
                         <td>泉州金科服装有限公司</td>
                         <td>练添旺</td>
                         <td data-column="本周销量" data-value="0.0">0.00</td>
-                        <td data-column="本月销量" data-value="0.0">0.00</td>
-                        <td data-column="本季销量" data-value="0.0">0.00</td>
+                        <td data-column="本月销量" data-value="12.0">12.00</td>
+                        <td data-column="本季销量" data-value="12.0">12.00</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
                         <td data-column="2022销量" data-value="0.0">0.00</td>
                         <td data-column="2023销量" data-value="0.0">0.00</td>
                         <td data-column="2024销量" data-value="199.0">199.00</td>
-                        <td data-column="2025销量" data-value="111.19">111.19</td>
-                        <td><span class="alert-badge">2025↓44.1%</span></td>
+                        <td data-column="2025销量" data-value="123.19">123.19</td>
+                        <td><span class="alert-badge">2025↓38.1%</span></td>
                     </tr>
                     <tr>
                         <td>泉州隆星织造有限公司</td>
@@ -10302,6 +10338,19 @@
                         <td data-column="2024销量" data-value="5.08">5.08</td>
                         <td data-column="2025销量" data-value="0.0">0.00</td>
                         <td><span class="alert-badge">2025↓100.0%</span></td>
+                    </tr>
+                    <tr>
+                        <td>浙江东之源纺织科技集团有限公司</td>
+                        <td>刘俊杰</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
+                        <td data-column="本月销量" data-value="27.0">27.00</td>
+                        <td data-column="本季销量" data-value="27.0">27.00</td>
+                        <td data-column="2021销量" data-value="0.0">0.00</td>
+                        <td data-column="2022销量" data-value="0.0">0.00</td>
+                        <td data-column="2023销量" data-value="0.0">0.00</td>
+                        <td data-column="2024销量" data-value="0.0">0.00</td>
+                        <td data-column="2025销量" data-value="27.0">27.00</td>
+                        <td>正常</td>
                     </tr>
                     <tr>
                         <td>浙江东利源供应链管理有限公司</td>
@@ -10800,7 +10849,7 @@
                     <tr>
                         <td>渝兴源</td>
                         <td>洪文革</td>
-                        <td data-column="本周销量" data-value="5.0">5.00</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="10.15">10.15</td>
                         <td data-column="本季销量" data-value="10.15">10.15</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
@@ -10956,7 +11005,7 @@
                     <tr>
                         <td>滋兴纺织</td>
                         <td>陈少豪</td>
-                        <td data-column="本周销量" data-value="1.0">1.00</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="1.0">1.00</td>
                         <td data-column="本季销量" data-value="1.0">1.00</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
@@ -11022,14 +11071,14 @@
                         <td>炜灿</td>
                         <td>洪文革</td>
                         <td data-column="本周销量" data-value="0.0">0.00</td>
-                        <td data-column="本月销量" data-value="0.0">0.00</td>
-                        <td data-column="本季销量" data-value="0.0">0.00</td>
+                        <td data-column="本月销量" data-value="4.99">4.99</td>
+                        <td data-column="本季销量" data-value="4.99">4.99</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
                         <td data-column="2022销量" data-value="105.05">105.05</td>
                         <td data-column="2023销量" data-value="0.0">0.00</td>
                         <td data-column="2024销量" data-value="10.0">10.00</td>
-                        <td data-column="2025销量" data-value="0.0">0.00</td>
-                        <td><span class="alert-badge">2023↓100.0% | 2025↓100.0%</span></td>
+                        <td data-column="2025销量" data-value="4.99">4.99</td>
+                        <td><span class="alert-badge">2023↓100.0% | 2025↓50.1%</span></td>
                     </tr>
                     <tr>
                         <td>烨达纱行</td>
@@ -11594,14 +11643,14 @@
                         <td>石狮市皇瀚纺织品贸易有限公司</td>
                         <td>陈晓明</td>
                         <td data-column="本周销量" data-value="0.0">0.00</td>
-                        <td data-column="本月销量" data-value="0.0">0.00</td>
-                        <td data-column="本季销量" data-value="0.0">0.00</td>
+                        <td data-column="本月销量" data-value="2.04">2.04</td>
+                        <td data-column="本季销量" data-value="2.04">2.04</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
                         <td data-column="2022销量" data-value="3.0">3.00</td>
                         <td data-column="2023销量" data-value="32.65">32.65</td>
                         <td data-column="2024销量" data-value="138.32">138.32</td>
-                        <td data-column="2025销量" data-value="27.07">27.07</td>
-                        <td><span class="alert-badge">2025↓80.4%</span></td>
+                        <td data-column="2025销量" data-value="29.11">29.11</td>
+                        <td><span class="alert-badge">2025↓79.0%</span></td>
                     </tr>
                     <tr>
                         <td>石狮市紫湖针织厂</td>
@@ -12204,7 +12253,7 @@
                     <tr>
                         <td>福建省晋江市嘉雄服装织造有限公司</td>
                         <td>陈晓明</td>
-                        <td data-column="本周销量" data-value="2.04">2.04</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="4.08">4.08</td>
                         <td data-column="本季销量" data-value="4.08">4.08</td>
                         <td data-column="2021销量" data-value="0.23">0.23</td>
@@ -12295,7 +12344,7 @@
                     <tr>
                         <td>福建胜城纺织有限公司</td>
                         <td>洪智</td>
-                        <td data-column="本周销量" data-value="36.65">36.65</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="58.95">58.95</td>
                         <td data-column="本季销量" data-value="58.95">58.95</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
@@ -12711,7 +12760,7 @@
                     <tr>
                         <td>绍兴新万年针织有限公司</td>
                         <td>许书沛</td>
-                        <td data-column="本周销量" data-value="10.0">10.00</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="10.0">10.00</td>
                         <td data-column="本季销量" data-value="10.0">10.00</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
@@ -12789,7 +12838,7 @@
                     <tr>
                         <td>绍兴柯桥美通贸易有限公司</td>
                         <td>许书沛</td>
-                        <td data-column="本周销量" data-value="2.81">2.81</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="2.81">2.81</td>
                         <td data-column="本季销量" data-value="2.81">2.81</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
@@ -13049,7 +13098,7 @@
                     <tr>
                         <td>绍兴顺赞针织有限公司</td>
                         <td>王刚</td>
-                        <td data-column="本周销量" data-value="33.0">33.00</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="33.0">33.00</td>
                         <td data-column="本季销量" data-value="33.0">33.00</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
@@ -13140,7 +13189,7 @@
                     <tr>
                         <td>联兴纺织</td>
                         <td>吴建炜</td>
-                        <td data-column="本周销量" data-value="5.0">5.00</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="5.0">5.00</td>
                         <td data-column="本季销量" data-value="5.0">5.00</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
@@ -13206,13 +13255,13 @@
                         <td>肖柏林</td>
                         <td>陈少豪</td>
                         <td data-column="本周销量" data-value="0.0">0.00</td>
-                        <td data-column="本月销量" data-value="0.0">0.00</td>
-                        <td data-column="本季销量" data-value="0.0">0.00</td>
+                        <td data-column="本月销量" data-value="11.84">11.84</td>
+                        <td data-column="本季销量" data-value="11.84">11.84</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
                         <td data-column="2022销量" data-value="0.0">0.00</td>
                         <td data-column="2023销量" data-value="0.0">0.00</td>
                         <td data-column="2024销量" data-value="9.01">9.01</td>
-                        <td data-column="2025销量" data-value="17.02">17.02</td>
+                        <td data-column="2025销量" data-value="28.86">28.86</td>
                         <td>正常</td>
                     </tr>
                     <tr>
@@ -13335,7 +13384,7 @@
                     <tr>
                         <td>腾乐花灰</td>
                         <td>洪乾坤</td>
-                        <td data-column="本周销量" data-value="2.38">2.38</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="34.85">34.85</td>
                         <td data-column="本季销量" data-value="34.85">34.85</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
@@ -13452,7 +13501,7 @@
                     <tr>
                         <td>荣达欣织造</td>
                         <td>张赐锋</td>
-                        <td data-column="本周销量" data-value="25.54">25.54</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="25.54">25.54</td>
                         <td data-column="本季销量" data-value="25.54">25.54</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
@@ -13751,7 +13800,7 @@
                     <tr>
                         <td>豫强纺织</td>
                         <td>吴建炜</td>
-                        <td data-column="本周销量" data-value="33.0">33.00</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="42.5">42.50</td>
                         <td data-column="本季销量" data-value="42.5">42.50</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
@@ -13972,7 +14021,7 @@
                     <tr>
                         <td>连旺布行</td>
                         <td>吴建炜</td>
-                        <td data-column="本周销量" data-value="2.0">2.00</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="2.0">2.00</td>
                         <td data-column="本季销量" data-value="2.0">2.00</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
@@ -14038,19 +14087,19 @@
                         <td>郑晓鹏</td>
                         <td>洪文革</td>
                         <td data-column="本周销量" data-value="0.0">0.00</td>
-                        <td data-column="本月销量" data-value="0.0">0.00</td>
-                        <td data-column="本季销量" data-value="0.0">0.00</td>
+                        <td data-column="本月销量" data-value="17.42">17.42</td>
+                        <td data-column="本季销量" data-value="17.42">17.42</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
                         <td data-column="2022销量" data-value="0.0">0.00</td>
                         <td data-column="2023销量" data-value="0.0">0.00</td>
                         <td data-column="2024销量" data-value="27.89">27.89</td>
-                        <td data-column="2025销量" data-value="157.72">157.72</td>
+                        <td data-column="2025销量" data-value="175.15">175.15</td>
                         <td>正常</td>
                     </tr>
                     <tr>
                         <td>郑燃</td>
                         <td>洪文革</td>
-                        <td data-column="本周销量" data-value="1.81">1.81</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="2.95">2.95</td>
                         <td data-column="本季销量" data-value="2.95">2.95</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
@@ -14285,14 +14334,14 @@
                         <td>鑫之旺布行</td>
                         <td>吴建炜</td>
                         <td data-column="本周销量" data-value="0.0">0.00</td>
-                        <td data-column="本月销量" data-value="0.0">0.00</td>
-                        <td data-column="本季销量" data-value="0.0">0.00</td>
+                        <td data-column="本月销量" data-value="5.0">5.00</td>
+                        <td data-column="本季销量" data-value="5.0">5.00</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
                         <td data-column="2022销量" data-value="0.0">0.00</td>
                         <td data-column="2023销量" data-value="0.0">0.00</td>
                         <td data-column="2024销量" data-value="147.73">147.73</td>
-                        <td data-column="2025销量" data-value="65.25">65.25</td>
-                        <td><span class="alert-badge">2025↓55.8%</span></td>
+                        <td data-column="2025销量" data-value="70.25">70.25</td>
+                        <td><span class="alert-badge">2025↓52.4%</span></td>
                     </tr>
                     <tr>
                         <td>鑫润</td>
@@ -14350,13 +14399,13 @@
                         <td>钟楚溪</td>
                         <td>洪文革</td>
                         <td data-column="本周销量" data-value="0.0">0.00</td>
-                        <td data-column="本月销量" data-value="34.07">34.07</td>
-                        <td data-column="本季销量" data-value="34.07">34.07</td>
+                        <td data-column="本月销量" data-value="36.07">36.07</td>
+                        <td data-column="本季销量" data-value="36.07">36.07</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
                         <td data-column="2022销量" data-value="0.0">0.00</td>
                         <td data-column="2023销量" data-value="0.0">0.00</td>
                         <td data-column="2024销量" data-value="0.0">0.00</td>
-                        <td data-column="2025销量" data-value="34.07">34.07</td>
+                        <td data-column="2025销量" data-value="36.07">36.07</td>
                         <td>正常</td>
                     </tr>
                     <tr>
@@ -14401,7 +14450,7 @@
                     <tr>
                         <td>锦华贸易</td>
                         <td>陈少豪</td>
-                        <td data-column="本周销量" data-value="6.38">6.38</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="44.38">44.38</td>
                         <td data-column="本季销量" data-value="44.38">44.38</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
@@ -14492,28 +14541,28 @@
                     <tr>
                         <td>陈东立</td>
                         <td>陈少豪</td>
-                        <td data-column="本周销量" data-value="5.22">5.22</td>
-                        <td data-column="本月销量" data-value="28.83">28.83</td>
-                        <td data-column="本季销量" data-value="28.83">28.83</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
+                        <td data-column="本月销量" data-value="31.83">31.83</td>
+                        <td data-column="本季销量" data-value="31.83">31.83</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
                         <td data-column="2022销量" data-value="0.0">0.00</td>
                         <td data-column="2023销量" data-value="0.0">0.00</td>
                         <td data-column="2024销量" data-value="130.28">130.28</td>
-                        <td data-column="2025销量" data-value="80.67">80.67</td>
-                        <td><span class="alert-badge">2025↓38.1%</span></td>
+                        <td data-column="2025销量" data-value="83.67">83.67</td>
+                        <td><span class="alert-badge">2025↓35.8%</span></td>
                     </tr>
                     <tr>
                         <td>陈东筹</td>
                         <td>陈少豪</td>
-                        <td data-column="本周销量" data-value="8.0">8.00</td>
-                        <td data-column="本月销量" data-value="24.73">24.73</td>
-                        <td data-column="本季销量" data-value="24.73">24.73</td>
+                        <td data-column="本周销量" data-value="1.05">1.05</td>
+                        <td data-column="本月销量" data-value="29.43">29.43</td>
+                        <td data-column="本季销量" data-value="29.43">29.43</td>
                         <td data-column="2021销量" data-value="210.61">210.61</td>
                         <td data-column="2022销量" data-value="355.24">355.24</td>
                         <td data-column="2023销量" data-value="216.21">216.21</td>
                         <td data-column="2024销量" data-value="203.76">203.76</td>
-                        <td data-column="2025销量" data-value="89.0">89.00</td>
-                        <td><span class="alert-badge">2023↓39.1% | 2025↓56.3%</span></td>
+                        <td data-column="2025销量" data-value="93.7">93.70</td>
+                        <td><span class="alert-badge">2023↓39.1% | 2025↓54.0%</span></td>
                     </tr>
                     <tr>
                         <td>陈亮华</td>
@@ -14596,7 +14645,7 @@
                     <tr>
                         <td>陈新达</td>
                         <td>陈少豪</td>
-                        <td data-column="本周销量" data-value="1.2">1.20</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="4.68">4.68</td>
                         <td data-column="本季销量" data-value="4.68">4.68</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
@@ -14661,7 +14710,7 @@
                     <tr>
                         <td>陈泽宏</td>
                         <td>陈少豪</td>
-                        <td data-column="本周销量" data-value="4.0">4.00</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="4.0">4.00</td>
                         <td data-column="本季销量" data-value="4.0">4.00</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
@@ -14740,13 +14789,13 @@
                         <td>陈荣宣</td>
                         <td>陈少豪</td>
                         <td data-column="本周销量" data-value="0.0">0.00</td>
-                        <td data-column="本月销量" data-value="0.0">0.00</td>
-                        <td data-column="本季销量" data-value="0.0">0.00</td>
+                        <td data-column="本月销量" data-value="2.0">2.00</td>
+                        <td data-column="本季销量" data-value="2.0">2.00</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
                         <td data-column="2022销量" data-value="0.0">0.00</td>
                         <td data-column="2023销量" data-value="0.0">0.00</td>
                         <td data-column="2024销量" data-value="4.03">4.03</td>
-                        <td data-column="2025销量" data-value="10.0">10.00</td>
+                        <td data-column="2025销量" data-value="12.0">12.00</td>
                         <td>正常</td>
                     </tr>
                     <tr>
@@ -15077,7 +15126,7 @@
                     <tr>
                         <td>鹏盛泰</td>
                         <td>张赐锋</td>
-                        <td data-column="本周销量" data-value="0.05">0.05</td>
+                        <td data-column="本周销量" data-value="0.0">0.00</td>
                         <td data-column="本月销量" data-value="0.05">0.05</td>
                         <td data-column="本季销量" data-value="0.05">0.05</td>
                         <td data-column="2021销量" data-value="0.0">0.00</td>
@@ -15365,8 +15414,8 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-    // ================= 交互功能实现 ================= 
     document.addEventListener('DOMContentLoaded', function() {
         let currentSort = { column: null, order: 'asc' };
 
@@ -15389,6 +15438,7 @@
         function filterTable() {
             const unitFilter = document.getElementById('unitFilter').value.toLowerCase();
             const salesFilter = document.getElementById('salesFilter').value.toLowerCase();
+
             document.querySelectorAll('tbody tr').forEach(row => {
                 const unit = row.cells[0].textContent.toLowerCase();
                 const sales = row.cells[1].textContent.toLowerCase();
@@ -15397,31 +15447,64 @@
             });
         }
 
-        // 数据导出功能
+        // ================= 新版导出功能 =================
         window.exportData = function() {
-            const rows = Array.from(document.querySelectorAll('tbody tr'));
-            const headers = Array.from(document.querySelectorAll('thead th')).map(th => th.textContent);
-            let csvContent = "\uFEFF"; // 解决中文乱码
-            csvContent += headers.join(',') + '\n';
+            try {
+                // 获取可见行数据
+                const visibleRows = Array.from(document.querySelectorAll('tbody tr'))
+                    .filter(row => row.style.display !== 'none');
 
-            rows.forEach((row, index) => {
-                const cells = Array.from(row.cells).map(cell => {
-                    let text = cell.textContent;
-                    if (text.includes(',')) text = `"${text}"`;
-                    return text;
+                // 构建CSV内容
+                const headers = ['购货单位', '业务员', '本周销量', '本月销量', '本季销量',
+                                '2021销量', '2022销量', '2023销量', '2024销量', '2025销量', '趋势预警'];
+                let csvContent = '\uFEFF'; // 解决中文乱码
+                csvContent += headers.join(',') + '\n';
+
+                visibleRows.forEach(row => {
+                    const cells = Array.from(row.cells);
+                    const rowData = [];
+
+                    // 处理前10列数值数据
+                    for(let i=0; i<10; i++) {
+                        const cell = cells[i];
+                        const numValue = parseFloat(cell.dataset.value || cell.textContent);
+                        rowData.push(isNaN(numValue) ? `"${cell.textContent}"` : numValue.toFixed(2));
+                    }
+
+                    // 处理预警列
+                    const alertText = cells[10].textContent.replace(/"/g, '""'); // 处理双引号
+                    rowData.push(`"${alertText}"`);
+
+                    csvContent += rowData.join(',') + '\n';
                 });
-                csvContent += [index + 1, ...cells].join(',') + '\n'; // 添加索引
-            });
 
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `销售数据_${new Date().toISOString().slice(0,10)}.csv`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
+                // 创建Blob对象
+                const blob = new Blob([csvContent], { 
+                    type: 'text/csv;charset=utf-8;' 
+                });
+
+                // 创建下载链接
+                const link = document.createElement('a');
+                const filename = `销售数据_${new Date().toISOString().slice(0,10)}.csv`;
+
+                if (navigator.msSaveBlob) { // IE兼容
+                    navigator.msSaveBlob(blob, filename);
+                } else {
+                    const url = URL.createObjectURL(blob);
+                    link.href = url;
+                    link.download = filename;
+                    link.style.display = 'none';
+                    document.body.appendChild(link);
+                    link.click();
+                    setTimeout(() => {
+                        document.body.removeChild(link);
+                        URL.revokeObjectURL(url);
+                    }, 100);
+                }
+            } catch (error) {
+                console.error('导出失败:', error);
+                alert('数据导出失败，请检查控制台日志');
+            }
         }
 
         // 事件绑定
