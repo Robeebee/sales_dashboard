@@ -40,6 +40,15 @@
         .table-hover tbody tr:hover { background-color: rgba(0,123,255,.05)!important; }
         .export-btn { min-width: 120px; }
         .dataTables_wrapper { padding: 15px 0; }
+        .update-time {
+            font-size: 0.85rem;
+            color: #6c757d;
+            white-space: nowrap;
+            margin-left: 1rem;
+        }
+        .update-time i {
+            margin-right: 0.3rem;
+        }
     </style>
 </head>
 <body>
@@ -48,12 +57,15 @@
         <div class="dashboard-header">
             <div class="row g-3 align-items-center">
                 <div class="col-md-4">
-                    <input type="text" id="unitFilter" class="form-control filter-group" 
+                    <input type="text" id="unitFilter" class="form-control" 
                            placeholder="搜索购货单位..." aria-label="购货单位">
                 </div>
-                <div class="col-md-4">
-                    <input type="text" id="salesFilter" class="form-control filter-group" 
+                <div class="col-md-4 d-flex align-items-center">
+                    <input type="text" id="salesFilter" class="form-control flex-grow-1" 
                            placeholder="搜索业务员..." aria-label="业务员">
+                    <div class="update-time">
+                        <i class="fas fa-clock"></i>更新至：2025-04-21
+                    </div>
                 </div>
                 <div class="col-md-4 text-end">
                     <button class="btn btn-success export-btn" onclick="exportData()">
@@ -15419,7 +15431,6 @@
     document.addEventListener('DOMContentLoaded', function() {
         let currentSort = { column: null, order: 'asc' };
 
-        // 表格排序功能
         function sortTable(column, order) {
             const tbody = document.querySelector('tbody');
             const rows = Array.from(tbody.querySelectorAll('tr'));
@@ -15434,7 +15445,6 @@
             rows.forEach(row => tbody.appendChild(row));
         }
 
-        // 搜索过滤功能
         function filterTable() {
             const unitFilter = document.getElementById('unitFilter').value.toLowerCase();
             const salesFilter = document.getElementById('salesFilter').value.toLowerCase();
@@ -15447,47 +15457,40 @@
             });
         }
 
-        // ================= 新版导出功能 =================
         window.exportData = function() {
             try {
-                // 获取可见行数据
                 const visibleRows = Array.from(document.querySelectorAll('tbody tr'))
                     .filter(row => row.style.display !== 'none');
 
-                // 构建CSV内容
                 const headers = ['购货单位', '业务员', '本周销量', '本月销量', '本季销量',
                                 '2021销量', '2022销量', '2023销量', '2024销量', '2025销量', '趋势预警'];
-                let csvContent = '\uFEFF'; // 解决中文乱码
+                let csvContent = '\uFEFF';
                 csvContent += headers.join(',') + '\n';
 
                 visibleRows.forEach(row => {
                     const cells = Array.from(row.cells);
                     const rowData = [];
 
-                    // 处理前10列数值数据
                     for(let i=0; i<10; i++) {
                         const cell = cells[i];
                         const numValue = parseFloat(cell.dataset.value || cell.textContent);
                         rowData.push(isNaN(numValue) ? `"${cell.textContent}"` : numValue.toFixed(2));
                     }
 
-                    // 处理预警列
-                    const alertText = cells[10].textContent.replace(/"/g, '""'); // 处理双引号
+                    const alertText = cells[10].textContent.replace(/"/g, '""');
                     rowData.push(`"${alertText}"`);
 
                     csvContent += rowData.join(',') + '\n';
                 });
 
-                // 创建Blob对象
                 const blob = new Blob([csvContent], { 
                     type: 'text/csv;charset=utf-8;' 
                 });
 
-                // 创建下载链接
                 const link = document.createElement('a');
                 const filename = `销售数据_${new Date().toISOString().slice(0,10)}.csv`;
 
-                if (navigator.msSaveBlob) { // IE兼容
+                if (navigator.msSaveBlob) {
                     navigator.msSaveBlob(blob, filename);
                 } else {
                     const url = URL.createObjectURL(blob);
@@ -15507,7 +15510,6 @@
             }
         }
 
-        // 事件绑定
         document.querySelectorAll('.sort-header').forEach(header => {
             header.addEventListener('click', function() {
                 const column = this.dataset.column;
